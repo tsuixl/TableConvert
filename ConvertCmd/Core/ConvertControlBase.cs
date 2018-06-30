@@ -45,13 +45,14 @@ namespace ConvertCmd.Core
             DesFolder = new DirectoryInfo (args.DesPath).FullName.Replace("\\", "/");
             ExcelSourceFolder = new DirectoryInfo (args.ExcelPath).FullName.Replace("\\", "/");
 
-            if (string.IsNullOrEmpty(ExcelSourceFolder))
+            if (string.IsNullOrEmpty(ExcelSourceFolder) || !Directory.Exists(ExcelSourceFolder))
             {
                 throw new System.ArgumentException ("excelFolder 不存在!");
             }
 
             if (string.IsNullOrEmpty(DesFolder))
                 throw new System.ArgumentException ("desFolder 为空!");
+            
 
             if (!Directory.Exists(DesFolder))
             {

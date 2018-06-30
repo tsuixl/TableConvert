@@ -18,10 +18,6 @@ namespace ConvertCmd
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(args));
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
             
-            // args = new string[] {
-            //     "{\"ExcelPath\":\"C:/Users/tsuixl/Documents/Work/eyu/Slg/xfiles/number/excel\",\"DesPath\":\"C:/Users/tsuixl/Documents/Work/eyu/Slg/xfiles/client/project/Assets/ToLua/Lua/_MoeLua/Config\",\"SelectFile\":false}"
-            // };
-
             if (args.Length > 0)
             {
                 try
@@ -42,8 +38,8 @@ namespace ConvertCmd
                 MoeConvertControl moeConvertCtl = new MoeConvertControl();
                 var currentFolder = System.IO.Directory.GetCurrentDirectory();
                 ArgsData data = new ArgsData ();
-                data.ExcelPath = "../ExcelTest";
-                data.DesPath = "../OutputLua";
+                data.ExcelPath = "../@ExcelTest";
+                data.DesPath = "../@OutputLua";
                 moeConvertCtl.StartConvert (data);
             }
 

@@ -52,10 +52,8 @@ namespace ConvertCmd.Core.Convert.Moe
 
                 SystemUtil.Log( string.Format("Begain:\t{0}", relativeFilePath));
                 var content = base.ConvertFile (ef.FullPath);
-                SystemUtil.Log(string.Format("content == {0}", string.IsNullOrEmpty(content) ? "Empty": "HasValue"));
                 if (!string.IsNullOrEmpty(content))
                 {
-                    SystemUtil.Log("SaveFile : "+ ef.FileNameNoSuffix);
                     SaveFile(desFolder, desFileName, content);
                     PushInTypes(ef);
                     PushInLoadTest(ef);
