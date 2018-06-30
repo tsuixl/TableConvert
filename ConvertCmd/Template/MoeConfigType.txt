@@ -1,0 +1,4 @@
+ConfigType = {
+$TYPE_CONTENT$}
+
+return ConfigType

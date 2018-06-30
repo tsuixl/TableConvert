@@ -1,0 +1,35 @@
+
+$TABLE_NAME$ = {}
+
+$TABLE_NAME$.configs = {
+	
+$TABLE_CONTENTS$
+
+}
+
+$TABLE_NAME$.dataCount = $TABLE_CONUT$
+
+
+function $TABLE_NAME$:LoadFile()
+
+end
+
+
+-- 查找单个key
+function $TABLE_NAME$:Find (key)
+    return $TABLE_NAME$.configs[key]
+end
+
+
+--获取子表数量
+function $TABLE_NAME$:GetTablePageCount()
+    return 0
+end
+
+
+--获取表数据数量
+function $TABLE_NAME$:GetDataCount()
+    return $TABLE_NAME$.dataCount
+end
+
+return $TABLE_NAME$

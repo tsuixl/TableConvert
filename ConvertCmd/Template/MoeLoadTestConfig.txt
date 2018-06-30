@@ -1,0 +1,3 @@
+beforTime = os.clock()
+require("_MoeLua.Config.$MOE_RELATIVE_PATH$")
+print(string.format( "Load [$MOE_FILE_NAME$] %f s count %d", os.clock() - beforTime, ConfigMgr:GetDataCount(ConfigType.$FILE_NAME$)))
