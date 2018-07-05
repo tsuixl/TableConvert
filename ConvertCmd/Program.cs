@@ -20,19 +20,21 @@ namespace ConvertCmd
             
             if (args.Length > 0)
             {
+                ArgsData data = null;
                 try
                 {
-                    ArgsData data = JsonConvert.DeserializeObject<ArgsData>(args[0]);
+                    data = JsonConvert.DeserializeObject<ArgsData>(args[0]);
                     SystemUtil.Content = data;
-                    Assembly assembly = Assembly.GetExecutingAssembly();
-                    var type = Type.GetType("ConvertCmd.Core.Convert." + data.ConvertName);
-                    var ins = assembly.CreateInstance("ConvertCmd.Core.Convert." + data.ConvertName, true);
-                    type.GetMethod("StartConvert").Invoke(ins, new object[] { data });
                 }
                 catch (System.Exception)
                 {
                     SystemUtil.Abend (string.Format("参数解析失败(路径不能有\\)\n{0}", args[0]));
                 }
+
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                var type = Type.GetType("ConvertCmd.Core.Convert." + data.ConvertName);
+                var ins = assembly.CreateInstance("ConvertCmd.Core.Convert." + data.ConvertName, true);
+                type.GetMethod("StartConvert").Invoke(ins, new object[] { data });
             }
             else
             {
