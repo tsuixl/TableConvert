@@ -23,6 +23,7 @@ namespace ConvertCmd
                 try
                 {
                     ArgsData data = JsonConvert.DeserializeObject<ArgsData>(args[0]);
+                    SystemUtil.Content = data;
                     Assembly assembly = Assembly.GetExecutingAssembly();
                     var type = Type.GetType("ConvertCmd.Core.Convert." + data.ConvertName);
                     var ins = assembly.CreateInstance("ConvertCmd.Core.Convert." + data.ConvertName, true);
@@ -40,6 +41,7 @@ namespace ConvertCmd
                 ArgsData data = new ArgsData ();
                 data.ExcelPath = "../@ExcelTest";
                 data.DesPath = "../@OutputLua";
+                SystemUtil.Content = data;
                 moeConvertCtl.StartConvert (data);
             }
 

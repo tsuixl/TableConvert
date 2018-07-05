@@ -4,12 +4,14 @@ namespace ConvertCmd.Core.Util
 {
     public static class SystemUtil
     {
+        public static ArgsData Content;
+
         public static void Abend (string info)
         {
             Console.ForegroundColor = GetColor(ExceptionInfoType.Error);
             Console.WriteLine(info);
             Console.ForegroundColor = ConsoleColor.White;
-            Environment.Exit(0);
+            KillApp (info);
         }
 
 
@@ -29,13 +31,26 @@ namespace ConvertCmd.Core.Util
         }
 
 
-        public static void Print (ConvertExceptionInfo info)
+        public static void Print(ConvertExceptionInfo info)
         {
             Console.ForegroundColor = GetColor(info.InfoType);
             Console.WriteLine(info.Info);
             Console.ForegroundColor = ConsoleColor.White;
             if (info.InfoType == ExceptionInfoType.Error)
-                Environment.Exit(0);
+            {
+                KillApp(info.Info);
+            }
+        }
+
+
+        public static void KillApp(string info)
+        {
+            if (Content.Jenkins)
+            {
+                info = string.Format(@"\e[#{{{0}}}m#{{{1}}}\e[0m", 31, info);
+            }
+            
+            throw new System.Exception (info);
         }
 
 

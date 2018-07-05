@@ -13,6 +13,8 @@ namespace ConvertCmd.Core
 
         public bool SelectFile {get; set;}
 
+        public bool Jenkins  { get; set;}
+
         public ArgsData ()
         {
             ClearDes = true;
