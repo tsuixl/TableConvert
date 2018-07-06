@@ -57,7 +57,8 @@ namespace ConvertCmd.Core.Language
             }
             else if (fieldType == ValueType.Integer)
             {
-                return ConvertInteger(fieldName, fieldValue, level);
+                return ConvertDouble (fieldName, fieldValue, level);
+                // return ConvertInteger(fieldName, fieldValue, level);
             }
             else if (fieldType == ValueType.String)
             {
