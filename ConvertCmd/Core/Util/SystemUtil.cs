@@ -9,7 +9,7 @@ namespace ConvertCmd.Core.Util
         public static void Abend (string info)
         {
             Console.ForegroundColor = GetColor(ExceptionInfoType.Error);
-            Console.WriteLine(info);
+            WriteLine(info, 0);
             Console.ForegroundColor = ConsoleColor.White;
             KillApp (info);
         }
@@ -18,7 +18,7 @@ namespace ConvertCmd.Core.Util
         public static void Log (string info)
         {
             Console.ForegroundColor = GetColor(ExceptionInfoType.Info);
-            Console.WriteLine(info);
+            WriteLine(info, 0);
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -43,11 +43,23 @@ namespace ConvertCmd.Core.Util
         {
             if (spacing <= 0)
             {
-                Console.WriteLine(info);
+                if (Content.Jenkins)
+                {
+                    Console.WriteLine(string.Format(GetJenkinsColor(Console.ForegroundColor), info));
+                }
+                else
+                {
+                    Console.WriteLine (info);
+                }
             }
             else
             {
-                Console.WriteLine(string.Format("{0}{1}", GetSpacing(spacing), info));
+                var str = string.Format("{0}{1}", GetSpacing(spacing), info);
+                if (Content.Jenkins)
+                {
+                    str = string.Format(GetJenkinsColor(Console.ForegroundColor), info);
+                }
+                Console.WriteLine(str);
             }
         }
 
@@ -55,7 +67,7 @@ namespace ConvertCmd.Core.Util
         public static void Wran (string info)
         {
             Console.ForegroundColor = GetColor(ExceptionInfoType.Warn);
-            Console.WriteLine(info);
+            WriteLine(info, 0);
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -63,7 +75,7 @@ namespace ConvertCmd.Core.Util
         public static void Print(ConvertExceptionInfo info)
         {
             Console.ForegroundColor = GetColor(info.InfoType);
-            Console.WriteLine(info.Info);
+            WriteLine(info.Info, 0);
             Console.ForegroundColor = ConsoleColor.White;
             if (info.InfoType == ExceptionInfoType.Error)
             {
@@ -76,7 +88,7 @@ namespace ConvertCmd.Core.Util
         {
             if (Content.Jenkins)
             {
-                info = string.Format(@"\e[#{{{0}}}m#{{{1}}}\e[0m", 31, info);
+                info = string.Format(@"\e[31m{0}\e[0m\n", 31, info);
             }
             
             throw new System.Exception (info);
@@ -86,7 +98,8 @@ namespace ConvertCmd.Core.Util
         public static void Log (string info, ConsoleColor color)
         {
             Console.ForegroundColor = color;
-            Console.WriteLine(info);
+            // Console.WriteLine(info);
+            WriteLine(info, 0);
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -117,6 +130,32 @@ namespace ConvertCmd.Core.Util
                 return ConsoleColor.Yellow;
             else
                 return ConsoleColor.White;
+        }
+
+
+        public static string GetJenkinsColor (ConsoleColor color)
+        {
+            // if (color == ConsoleColor.Red)
+            // {
+            //     return @"\e[31m{0}\e[0m" ;
+            // }
+            // else if (color == ConsoleColor.Yellow)
+            // {
+            //     return @"\e[33m{0}\e[0m" ;
+            // }
+            // else if (color == ConsoleColor.Green)
+            // {
+            //     return @"\e[32m{0}\e[0m" ;
+            // }
+            // else if (color == ConsoleColor.Blue)
+            // {
+            //     return @"\e[34m{0}\e[0m" ;
+            // }
+            // else
+            // {
+            //     return @"\e[37m{0}\e[0m" ;
+            // }
+            return "{0}";
         }
     }
 }
