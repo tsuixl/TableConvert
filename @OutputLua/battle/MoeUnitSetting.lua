@@ -246,6 +246,9 @@ MoeUnitSetting.configs = {
 		string = "步兵方阵",
 		unitKind = "SABER",
 		unitType = "SOLDIER_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 	[101] = {
@@ -253,6 +256,9 @@ MoeUnitSetting.configs = {
 		string = "骑兵方阵",
 		unitKind = "RIDER",
 		unitType = "SOLDIER_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 	[102] = {
@@ -260,6 +266,9 @@ MoeUnitSetting.configs = {
 		string = "弓兵方阵",
 		unitKind = "ARCHER",
 		unitType = "SOLDIER_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 	[103] = {
@@ -267,6 +276,9 @@ MoeUnitSetting.configs = {
 		string = "炮兵方阵",
 		unitKind = "GUNNER",
 		unitType = "SOLDIER_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 	[104] = {
@@ -274,6 +286,9 @@ MoeUnitSetting.configs = {
 		string = "地刺方阵",
 		unitKind = "SPIKEWEED",
 		unitType = "TRAP_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 	[105] = {
@@ -281,6 +296,9 @@ MoeUnitSetting.configs = {
 		string = "滚木方阵",
 		unitKind = "ROLL_WOOD",
 		unitType = "TRAP_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 	[106] = {
@@ -288,6 +306,9 @@ MoeUnitSetting.configs = {
 		string = "箭塔方阵",
 		unitKind = "ARROW_TOWER",
 		unitType = "TRAP_MATRIX",
+		normalSkills = {
+			[1] = 1
+		},
 	},
 
 

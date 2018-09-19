@@ -8,6 +8,7 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Reflection;
 using ConvertCmd.Core.Util;
+using ConvertCmd.Core.Test;
 
 namespace ConvertCmd
 {
@@ -17,7 +18,7 @@ namespace ConvertCmd
         {
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(args));
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
-            
+            TestControl ctl = new TestControl();
             if (args.Length > 0)
             {
                 ArgsData data = null;
@@ -30,7 +31,7 @@ namespace ConvertCmd
                 {
                     SystemUtil.Abend (string.Format("参数解析失败(路径不能有\\)\n{0}", args[0]));
                 }
-
+                data.ConvertEvent = ctl;
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 var type = Type.GetType("ConvertCmd.Core.Convert." + data.ConvertName);
                 var ins = assembly.CreateInstance("ConvertCmd.Core.Convert." + data.ConvertName, true);
@@ -41,8 +42,11 @@ namespace ConvertCmd
                 MoeConvertControl moeConvertCtl = new MoeConvertControl();
                 var currentFolder = System.IO.Directory.GetCurrentDirectory();
                 ArgsData data = new ArgsData ();
-                data.ExcelPath = "../@ExcelTest";
-                data.DesPath = "../@OutputLua";
+                data.ConvertEvent = ctl;
+                // data.ExcelPath = "../@ExcelTest";
+                // data.DesPath = "../@OutputLua";
+                data.ExcelPath = "/Users/cc/Documents/eyu/slg/xfiles/number/excel";
+                data.DesPath = "/Users/cc/Documents/eyu/slg/xfiles/number/lua";
                 SystemUtil.Content = data;
                 moeConvertCtl.StartConvert (data);
             }

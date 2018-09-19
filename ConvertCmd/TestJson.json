@@ -1,0 +1,41 @@
+{
+  "ArmySetting.xlsx": {
+    "ExcelName": "ArmySetting.xlsx",
+    "Keys": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "SheetDatas": [
+      {
+        "SheetName": "Sheet1",
+        "VerifyDatas": {
+          "2": {
+            "Idx": 2,
+            "TestInfo": "{\"Ref\": [\"UnitSetting\"]}",
+            "Values": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "ArmySettingNoTest.xlsx": {
+    "ExcelName": "ArmySettingNoTest.xlsx",
+    "Keys": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "SheetDatas": []
+  }
+}

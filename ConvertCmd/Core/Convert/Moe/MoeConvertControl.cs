@@ -50,10 +50,12 @@ namespace ConvertCmd.Core.Convert.Moe
                 var desFileName = string.Format("{0}/{1}/Moe{2}.lua", DesFolder, ef.RelativeDirectoryPath, ef.FileNameNoSuffix);
                 var desFolder = Path.GetDirectoryName(desFileName);
 
-                SystemUtil.Log( string.Format("Begain:\t{0}", relativeFilePath));
+                SystemUtil.Log( string.Format("Begin:\t{0}", relativeFilePath));
                 var content = base.ConvertFile (ef.FullPath);
+                SystemUtil.Log(string.Format("content == {0}", string.IsNullOrEmpty(content) ? "Empty": "HasValue"));
                 if (!string.IsNullOrEmpty(content))
                 {
+                    SystemUtil.Log("SaveFile : "+ ef.FileNameNoSuffix);
                     SaveFile(desFolder, desFileName, content);
                     PushInTypes(ef);
                     PushInLoadTest(ef);
@@ -77,6 +79,8 @@ namespace ConvertCmd.Core.Convert.Moe
 
             SystemUtil.Log("Convert Finish!");
             SystemUtil.Log("");
+
+            ConvertHandle.EventHandel?.OnConvertFinish();
         }
 
         //  检测是否有重命名文件

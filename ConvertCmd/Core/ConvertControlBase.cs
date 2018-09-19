@@ -34,6 +34,8 @@ namespace ConvertCmd.Core
 
         protected abstract IConvertTableHandle ConvertHandle { get; set; } 
 
+        public IConvertEvent ConvertEvent {get; private set;}
+
         protected string DesFolder;
         protected string ExcelSourceFolder;
 
@@ -51,8 +53,9 @@ namespace ConvertCmd.Core
             }
 
             if (string.IsNullOrEmpty(DesFolder))
-                throw new System.ArgumentException ("desFolder 为空!");
-            
+            {
+                throw new System.ArgumentException ("desFolder 为空! ");
+            }
 
             if (!Directory.Exists(DesFolder))
             {
@@ -77,6 +80,8 @@ namespace ConvertCmd.Core
             }
             else
                 Directory.CreateDirectory(DesFolder);
+
+            ConvertEvent = args.ConvertEvent;
 
             var srcAndDiagonal = string.Empty;
             if (ExcelSourceFolder.EndsWith("/"))
@@ -111,6 +116,7 @@ namespace ConvertCmd.Core
         protected string ConvertFile (string excelFilePath)
         {
             var exInfo = ExcelReader.Load (excelFilePath);
+            ConvertHandle.EventHandel = ConvertEvent;
             if (exInfo == null)
             {
                 ConvertHandle.ConvertStart(ExcelReader);
@@ -125,6 +131,8 @@ namespace ConvertCmd.Core
             {
                 SystemUtil.Print (exInfo);
             }
+
+            
             return string.Empty;
         }
 

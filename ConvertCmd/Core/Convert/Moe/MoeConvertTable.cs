@@ -46,6 +46,8 @@ namespace ConvertCmd.Core.Convert.Moe
         private SortedDictionary<int, ClientDef> _sheetClientDefs;
         private HashSet<string> _mainKeyRecords;
 
+        public IConvertEvent EventHandel { get; set;}
+
         public MoeConvertTable ()
         {
             // _startRow = 5;
@@ -66,6 +68,7 @@ namespace ConvertCmd.Core.Convert.Moe
             _sheetClientDefs.Clear();
             _jsonToLua.ResetCache();
             _excelTxt.Length = 0;
+            EventHandel?.OnConvertExcelStart (excelReader.ExcelName);
             // _excelTxt.AppendLine ("data = {\n");
             // System.Console.WriteLine(string.Format("StartLoad {0}", excelReader.ExcelName));
             return null;
@@ -102,6 +105,8 @@ namespace ConvertCmd.Core.Convert.Moe
             {
                 SystemUtil.Wran("[改表没有任务数据导出!]");
             }
+
+            EventHandel?.OnConvertExcelEnd(_excelName);
             return null;
         }
 
@@ -126,12 +131,21 @@ namespace ConvertCmd.Core.Convert.Moe
                     return null;
             }
 
-            //  起始行
+            //  Event
+            EventHandel?.OnConvertSheetStart(_sheetName, sheetReader);
+
             int currentRow = START_ROW;
+            //  Test
+            // SystemUtil.LogTest(sheetReader.GetCell(5, 1));
+            if (sheetReader.GetCell(5, 1).ToString() == "TEST")
+            {
+                currentRow ++;
+            }
+
+          
             bool isBreak = false;
             string[] lineData = null;
 
-            
             while (true)
             {
                 if (isBreak)
@@ -164,9 +178,12 @@ namespace ConvertCmd.Core.Convert.Moe
                 
                 //  导出为lua
                 ParseLine(lineData, currentRow);
+                EventHandel?.OnConvertSheetLine(currentRow, lineData);
                 ++_convertCount;
                 ++currentRow;
             }
+
+            EventHandel?.OnConvertSheetEnd(_sheetName);
 
             SystemUtil.Log (ContentInfo("Finish!"), System.ConsoleColor.Green);
             return null;

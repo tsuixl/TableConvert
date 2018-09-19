@@ -15,6 +15,8 @@ namespace ConvertCmd.Core
 
         public bool Jenkins  { get; set;}
 
+        public IConvertEvent ConvertEvent { get; set; }
+        
         public ArgsData ()
         {
             ClearDes = true;

@@ -1,11 +1,10 @@
 
-MoeArmySetting = {}
+MoeArmySettingNoTest = {}
 
-MoeArmySetting.configs = {
+MoeArmySettingNoTest.configs = {
 	
 	[1] = {
 		armyId = 1,
-		unitId = 1,
 		costs = {
 			[1] = {
 				type = "CURRENCY",
@@ -20,7 +19,6 @@ MoeArmySetting.configs = {
 
 	[2] = {
 		armyId = 2,
-		unitId = 2,
 		costs = {
 			[1] = {
 				type = "CURRENCY",
@@ -35,7 +33,6 @@ MoeArmySetting.configs = {
 
 	[3] = {
 		armyId = 3,
-		unitId = 3,
 		costs = {
 			[1] = {
 				type = "CURRENCY",
@@ -50,7 +47,6 @@ MoeArmySetting.configs = {
 
 	[4] = {
 		armyId = 4,
-		unitId = 4,
 		costs = {
 			[1] = {
 				type = "CURRENCY",
@@ -65,7 +61,6 @@ MoeArmySetting.configs = {
 
 	[5] = {
 		armyId = 5,
-		unitId = 10,
 		costs = {
 			[1] = {
 				type = "CURRENCY",
@@ -82,29 +77,29 @@ MoeArmySetting.configs = {
 
 }
 
-MoeArmySetting.dataCount = 5
+MoeArmySettingNoTest.dataCount = 5
 
 
-function MoeArmySetting:LoadFile()
+function MoeArmySettingNoTest:LoadFile()
 
 end
 
 
 -- 查找单个key
-function MoeArmySetting:Find (key)
-    return MoeArmySetting.configs[key]
+function MoeArmySettingNoTest:Find (key)
+    return MoeArmySettingNoTest.configs[key]
 end
 
 
 --获取子表数量
-function MoeArmySetting:GetTablePageCount()
+function MoeArmySettingNoTest:GetTablePageCount()
     return 0
 end
 
 
 --获取表数据数量
-function MoeArmySetting:GetDataCount()
-    return MoeArmySetting.dataCount
+function MoeArmySettingNoTest:GetDataCount()
+    return MoeArmySettingNoTest.dataCount
 end
 
-return MoeArmySetting
+return MoeArmySettingNoTest
