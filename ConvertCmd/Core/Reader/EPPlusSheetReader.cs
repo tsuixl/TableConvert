@@ -76,5 +76,29 @@ namespace ConvertCmd.Core.Reader
         {
             return col >= StartCol && col <= MaxCol;
         }
+
+
+        public bool HasFirst (string firstKey, int maxLine = 10)
+        {
+            return FindLineByFirst(firstKey, maxLine) != -1;
+        }
+
+        public int FindLineByFirst (string firstKey, int maxLine = 10)
+        {
+            int max = System.Math.Clamp (maxLine, 1, _maxRow);
+            if (StartRow > max)
+                return -1;
+
+            for (int i = StartRow; i < max; i++)
+            {
+                var v = GetCell (i, StartCol);
+                if (v == firstKey)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
     }
 }

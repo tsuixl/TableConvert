@@ -54,7 +54,9 @@ namespace ConvertCmd.Core.Test
 
         public void OnConvertSheetStart(string sheetName, ISheetReader reader)
         {
-            _tempExcelData.NewSheet(sheetName, reader.GetLineCell(5), reader.GetLineCell(3));
+            int tsetRow = reader.FindLineByFirst("TEST", 10);
+            if (tsetRow != -1)
+                _tempExcelData.NewSheet(sheetName, reader.GetLineCell(tsetRow), reader.GetLineCell(3));
         }
 
         public void OnConvertFinish ()

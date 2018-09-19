@@ -136,8 +136,7 @@ namespace ConvertCmd.Core.Convert.Moe
 
             int currentRow = START_ROW;
             //  Test
-            // SystemUtil.LogTest(sheetReader.GetCell(5, 1));
-            if (sheetReader.GetCell(5, 1).ToString() == "TEST")
+            if (sheetReader.HasFirst("TEST"))
             {
                 currentRow ++;
             }

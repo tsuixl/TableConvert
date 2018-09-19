@@ -135,26 +135,29 @@ namespace ConvertCmd.Core.Util
 
         public static string GetJenkinsColor (ConsoleColor color)
         {
+            // int c = 37;
             // if (color == ConsoleColor.Red)
             // {
-            //     return @"\e[31m{0}\e[0m" ;
+            //     c = 31;
             // }
             // else if (color == ConsoleColor.Yellow)
             // {
-            //     return @"\e[33m{0}\e[0m" ;
+            //     c = 33;
             // }
             // else if (color == ConsoleColor.Green)
             // {
-            //     return @"\e[32m{0}\e[0m" ;
+            //     c = 32;
             // }
             // else if (color == ConsoleColor.Blue)
             // {
-            //     return @"\e[34m{0}\e[0m" ;
+            //     c = 34;
             // }
             // else
             // {
-            //     return @"\e[37m{0}\e[0m" ;
+            //     c = 37;
             // }
+
+            // return string.Format("\\033[{0}m{{0}}\\033[0m", c);
             return "{0}";
         }
     }
