@@ -103,7 +103,7 @@ namespace ConvertCmd.Core.Convert.Moe
             }
             else
             {
-                SystemUtil.Wran("[改表没有任务数据导出!]");
+                SystemUtil.Wran("[该表没有任何数据可以导出!]");
             }
 
             EventHandel?.OnConvertExcelEnd(_excelName);

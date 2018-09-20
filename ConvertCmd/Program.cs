@@ -43,7 +43,7 @@ namespace ConvertCmd
                 var currentFolder = System.IO.Directory.GetCurrentDirectory();
                 ArgsData data = new ArgsData ();
                 data.ConvertEvent = ctl;
-                // data.Jenkins = true;
+                data.Jenkins = true;
                 data.ExcelPath = "../@ExcelTest";
                 data.DesPath = "../@OutputLua";
                 // data.ExcelPath = "/Users/cc/Documents/eyu/slg/xfiles/number/excel";

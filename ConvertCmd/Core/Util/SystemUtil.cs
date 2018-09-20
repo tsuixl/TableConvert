@@ -135,30 +135,30 @@ namespace ConvertCmd.Core.Util
 
         public static string GetJenkinsColor (ConsoleColor color)
         {
-            // int c = 37;
-            // if (color == ConsoleColor.Red)
-            // {
-            //     c = 31;
-            // }
-            // else if (color == ConsoleColor.Yellow)
-            // {
-            //     c = 33;
-            // }
-            // else if (color == ConsoleColor.Green)
-            // {
-            //     c = 32;
-            // }
-            // else if (color == ConsoleColor.Blue)
-            // {
-            //     c = 34;
-            // }
-            // else
-            // {
-            //     c = 37;
-            // }
+            int c = 37;
+            if (color == ConsoleColor.Red)
+            {
+                c = 31;
+            }
+            else if (color == ConsoleColor.Yellow)
+            {
+                c = 33;
+            }
+            else if (color == ConsoleColor.Green)
+            {
+                c = 32;
+            }
+            else if (color == ConsoleColor.Blue)
+            {
+                c = 34;
+            }
+            else
+            {
+                c = 37;
+            }
 
-            // return string.Format("\\033[{0}m{{0}}\\033[0m", c);
-            return "{0}";
+            return string.Format("\u001b[{0}m{{0}}\u001b[0m", c);
+            // return "{0}";
         }
     }
 }
