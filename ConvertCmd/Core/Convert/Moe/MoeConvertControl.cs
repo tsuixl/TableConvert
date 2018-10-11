@@ -53,14 +53,38 @@ namespace ConvertCmd.Core.Convert.Moe
                 SystemUtil.Log( string.Format("Begin:\t{0}", relativeFilePath));
                 var content = base.ConvertFile (ef.FullPath);
                 // SystemUtil.Log(string.Format("content == {0}", string.IsNullOrEmpty(content) ? "Empty": "HasValue"));
-                if (!string.IsNullOrEmpty(content))
+                if (content != null)
                 {
-                    // SystemUtil.Log("SaveFile : "+ ef.FileNameNoSuffix);
-                    SaveFile(desFolder, desFileName, content);
-                    PushInTypes(ef);
-                    PushInLoadTest(ef);
+                    if (content.CustomContent == null && !content.DefaultContent.IsNullOrEmptyOrWhiteSpace())
+                    {
+                        SaveFile(desFolder, desFileName, content.DefaultContent);
+                        PushInTypes(ef.RelativeDirectoryPath, ef.FileNameNoSuffix);
+                        PushInLoadTest(ef.RelativeDirectoryPath, ef.FileNameNoSuffix);
+                    }
+
+                    if (content.CustomContent != null)
+                    {
+                        foreach (var item in content.CustomContent)
+                        {
+                            desFileName = string.Format("{0}/{1}/Moe{2}.lua", DesFolder, ef.RelativeDirectoryPath, item.Key);
+                            SaveFile(desFolder, desFileName, item.Value);
+                            //  这里使用新的名称
+                            ef.FileNameNoSuffix = item.Key;
+                            PushInTypes(ef.RelativeDirectoryPath, ef.FileNameNoSuffix);
+                            PushInLoadTest(ef.RelativeDirectoryPath, ef.FileNameNoSuffix);
+                        }
+                    }
+                    
                     ++_convertCount;
                 }
+                // if (!string.IsNullOrEmpty(content))
+                // {
+                //     // SystemUtil.Log("SaveFile : "+ ef.FileNameNoSuffix);
+                //     SaveFile(desFolder, desFileName, content);
+                //     PushInTypes(ef);
+                //     PushInLoadTest(ef);
+                //     ++_convertCount;
+                // }
 
                 SystemUtil.Log( string.Format("End:\t{0}", relativeFilePath));
                 SystemUtil.Log("");
@@ -102,38 +126,38 @@ namespace ConvertCmd.Core.Convert.Moe
         }
 
 
-        private void PushInTypes (ExcelFileInfo excelFileInfo)
+        private void PushInTypes (string relativeDirectory, string fileNameNoSuffix)
         {
             // string fileName = Path.GetFileNameWithoutExtension(excelFileInfo.RelativePath);
             string luaPath = string.Empty;
-            if (string.IsNullOrEmpty(excelFileInfo.RelativeDirectoryPath))
+            if (string.IsNullOrEmpty(relativeDirectory))
                 luaPath = string.Format("{0}/Moe{1}", 
-                                            excelFileInfo.RelativeDirectoryPath, 
-                                            excelFileInfo.FileNameNoSuffix).Replace("/", "");
+                                            relativeDirectory, 
+                                            fileNameNoSuffix).Replace("/", "");
             else
                 luaPath = string.Format("{0}/Moe{1}", 
-                                            excelFileInfo.RelativeDirectoryPath, 
-                                            excelFileInfo.FileNameNoSuffix).Replace("/", ".");
-            _configTypes.AppendLine (string.Format("\t{0} = \"{1}\",", excelFileInfo.FileNameNoSuffix, luaPath));
+                                            relativeDirectory, 
+                                            fileNameNoSuffix).Replace("/", ".");
+            _configTypes.AppendLine (string.Format("\t{0} = \"{1}\",", fileNameNoSuffix, luaPath));
         }
 
 
-        private void PushInLoadTest (ExcelFileInfo excelFileInfo)
+        private void PushInLoadTest (string relativeDirectory, string fileNameNoSuffix)
         {
             string luaPath = string.Empty;
-            if (string.IsNullOrEmpty(excelFileInfo.RelativeDirectoryPath))
+            if (string.IsNullOrEmpty(relativeDirectory))
                 luaPath = string.Format("{0}/Moe{1}", 
-                                            excelFileInfo.RelativeDirectoryPath, 
-                                            excelFileInfo.FileNameNoSuffix).Replace("/", "");
+                                            relativeDirectory, 
+                                            fileNameNoSuffix).Replace("/", "");
             else
                 luaPath = string.Format("{0}/Moe{1}", 
-                                            excelFileInfo.RelativeDirectoryPath, 
-                                            excelFileInfo.FileNameNoSuffix).Replace("/", ".");
+                                            relativeDirectory, 
+                                            fileNameNoSuffix).Replace("/", ".");
 
             var info = Template.TemplateReplace.Replace("Template/MoeLoadTestConfig.txt", new Dictionary<string, string> () {
                 {"$MOE_RELATIVE_PATH$", luaPath},
-                {"$MOE_FILE_NAME$", string.Format("Moe{0}", excelFileInfo.FileNameNoSuffix)},
-                {"$FILE_NAME$", excelFileInfo.FileNameNoSuffix},
+                {"$MOE_FILE_NAME$", string.Format("Moe{0}", fileNameNoSuffix)},
+                {"$FILE_NAME$", fileNameNoSuffix},
             });
             _loadTest.AppendLine(info);
         }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ConvertCmd.Core
 {
     [System.Serializable]
@@ -16,12 +18,16 @@ namespace ConvertCmd.Core
         public bool Jenkins  { get; set;}
 
         public IConvertEvent ConvertEvent { get; set; }
+
+        // public List<string> Page { get; set; }
+        public Dictionary<string, string> CustomConvert { get; set; }
         
         public ArgsData ()
         {
             ClearDes = true;
             SelectFile = false;
             ConvertName = "Moe.MoeConvertControl";
+            CustomConvert = new Dictionary<string, string>();
         }
     }
 }

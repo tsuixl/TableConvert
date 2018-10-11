@@ -9,6 +9,7 @@ using System.IO;
 using System.Reflection;
 using ConvertCmd.Core.Util;
 using ConvertCmd.Core.Test;
+using System.Text.RegularExpressions;
 
 namespace ConvertCmd
 {
@@ -16,6 +17,11 @@ namespace ConvertCmd
     {
         static void Main(string[] args)
         {
+            //  test json
+            // string jsonStr = "{\"ExcelPath\":\"../../../excel\",\"DesPath\":\"../../../lua\",\"SelectFile\":false,\"Jenkins\":true,\"CustomConvert\":{\"LanguageSetting\":\"LanguageSplit\"},\"Test\":1}";
+            // var tempData = Newtonsoft.Json.JsonConvert.DeserializeObject<ArgsData> (jsonStr);
+            // Console.WriteLine(JsonConvert.SerializeObject(tempData));
+            // return ;
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(args));
             Console.WriteLine(System.IO.Directory.GetCurrentDirectory());
             TestControl ctl = new TestControl();
@@ -43,12 +49,15 @@ namespace ConvertCmd
                 var currentFolder = System.IO.Directory.GetCurrentDirectory();
                 ArgsData data = new ArgsData ();
                 data.ConvertEvent = ctl;
-                data.Jenkins = true;
-                data.ExcelPath = "../@ExcelTest";
-                data.DesPath = "../@OutputLua";
+                data.Jenkins = false;
+                data.ExcelPath = "../@ExcelTest/Test";
+                data.DesPath = "../@OutputLua/Test";
+                data.CustomConvert = new System.Collections.Generic.Dictionary<string, string>();
+                data.CustomConvert.Add("LanguageSetting", "LanguageSplit");
                 // data.ExcelPath = "/Users/cc/Documents/eyu/slg/xfiles/number/excel";
                 // data.DesPath = "/Users/cc/Documents/eyu/slg/xfiles/number/lua";
                 SystemUtil.Content = data;
+
                 moeConvertCtl.StartConvert (data);
             }
 

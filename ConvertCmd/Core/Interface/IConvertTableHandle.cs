@@ -11,6 +11,6 @@ namespace ConvertCmd.Core
 
         ConvertExceptionInfo ConvertFinish (IExcelReader excelReader);
 
-        string GetContent ();
+        ContentData GetContent ();
     }
 }

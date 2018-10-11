@@ -1,6 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using ConvertCmd.Core.Util;
+using System.Reflection;
 
 namespace ConvertCmd.Core
 {
@@ -8,7 +9,7 @@ namespace ConvertCmd.Core
     {
         public string FullPath {get; protected set;}
         public string Suffix {get; protected set;}
-        public string FileNameNoSuffix {get; protected set;}
+        public string FileNameNoSuffix {get; set;}
         public string RelativePath {get; protected set;}
         public string RelativeDirectoryPath {get; protected set;}
 
@@ -30,14 +31,16 @@ namespace ConvertCmd.Core
 
     public abstract class ConvertControlBase
     {
+        public IConvertEvent ConvertEvent {get; private set;}
+
         protected abstract IExcelReader ExcelReader {get; set;}
 
         protected abstract IConvertTableHandle ConvertHandle { get; set; } 
 
-        public IConvertEvent ConvertEvent {get; private set;}
 
         protected string DesFolder;
         protected string ExcelSourceFolder;
+        protected Dictionary<string, IConvertTableHandle> CustomConvert; 
 
         public void StartConvert (ArgsData args)
         {
@@ -103,6 +106,26 @@ namespace ConvertCmd.Core
                 excelFileInfos = UserSelect(excelFileInfos);
             }
 
+
+            //  自定义转换
+            CustomConvert = new Dictionary<string, IConvertTableHandle>();
+            if (args.CustomConvert != null && args.CustomConvert.Count > 0)
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                foreach (var item in args.CustomConvert)
+                {
+                    var ins = assembly.CreateInstance(item.Value, true);
+                    if (ins != null)
+                    {
+                        IConvertTableHandle handle = ins as IConvertTableHandle;
+                        if (handle != null)
+                        {
+                            CustomConvert.Add(item.Key, handle);
+                        }
+                    }
+                }
+            }
+
             _StartConvert (excelFileInfos);
 
             System.Console.WriteLine (string.Format("Excel Folder : {0}", ExcelSourceFolder));
@@ -113,27 +136,44 @@ namespace ConvertCmd.Core
         protected abstract void _StartConvert (List<ExcelFileInfo> excelFiles);
 
 
-        protected string ConvertFile (string excelFilePath)
+        protected ContentData ConvertFile (string excelFilePath)
         {
             var exInfo = ExcelReader.Load (excelFilePath);
-            ConvertHandle.EventHandel = ConvertEvent;
+            SystemUtil.Log(excelFilePath);
+
+            var currentHandel = GetConvertTableHandle (excelFilePath);
+
+            currentHandel.EventHandel = ConvertEvent;
             if (exInfo == null)
             {
-                ConvertHandle.ConvertStart(ExcelReader);
+                currentHandel.ConvertStart(ExcelReader);
                 foreach (ISheetReader sheetReader in ExcelReader)
                 {
-                    ConvertHandle.ConvertSheet(sheetReader);
+                    currentHandel.ConvertSheet(sheetReader);
                 }
-                ConvertHandle.ConvertFinish(ExcelReader);
-                return ConvertHandle.GetContent();
+                currentHandel.ConvertFinish(ExcelReader);
+                return currentHandel.GetContent();
             }
             else
             {
                 SystemUtil.Print (exInfo);
             }
 
-            
-            return string.Empty;
+            return null;
+        }
+
+
+        IConvertTableHandle GetConvertTableHandle (string excelFilePath)
+        {
+            var name = Path.GetFileNameWithoutExtension (excelFilePath);
+            if (CustomConvert.ContainsKey(name))
+            {
+                return CustomConvert[name];
+            }
+            else
+            {
+                return ConvertHandle;
+            }
         }
 
 

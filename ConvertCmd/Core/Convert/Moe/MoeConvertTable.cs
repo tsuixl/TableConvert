@@ -27,6 +27,7 @@ namespace ConvertCmd.Core.Convert.Moe
     public struct ClientDef
     {
         public string Field;
+        public string Comments;
         public ValueType ValueType;
     }
 
@@ -69,20 +70,21 @@ namespace ConvertCmd.Core.Convert.Moe
             _jsonToLua.ResetCache();
             _excelTxt.Length = 0;
             EventHandel?.OnConvertExcelStart (excelReader.ExcelName);
-            // _excelTxt.AppendLine ("data = {\n");
-            // System.Console.WriteLine(string.Format("StartLoad {0}", excelReader.ExcelName));
             return null;
         }
 
-        public string GetContent ()
+        public ContentData GetContent ()
         {
             if (_convertCount == 0)
             {
                 _excelTxt.Length = 0;
-                return string.Empty;
+                return null;
             }
 
-            return _excelTxt.ToString();
+            ContentData data = new ContentData();
+            data.DefaultContent = _excelTxt.ToString();
+
+            return data;
         }
 
         public ConvertExceptionInfo ConvertFinish(IExcelReader excelReader)
