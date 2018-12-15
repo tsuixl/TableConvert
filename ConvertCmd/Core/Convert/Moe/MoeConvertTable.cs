@@ -75,11 +75,11 @@ namespace ConvertCmd.Core.Convert.Moe
 
         public ContentData GetContent ()
         {
-            if (_convertCount == 0)
-            {
-                _excelTxt.Length = 0;
-                return null;
-            }
+            // if (_convertCount == 0)
+            // {
+            //     _excelTxt.Length = 0;
+            //     return null;
+            // }
 
             ContentData data = new ContentData();
             data.DefaultContent = _excelTxt.ToString();
@@ -89,10 +89,8 @@ namespace ConvertCmd.Core.Convert.Moe
 
         public ConvertExceptionInfo ConvertFinish(IExcelReader excelReader)
         {
-            // System.Console.WriteLine(string.Format("Load Finish {0}", excelReader.ExcelName));
-            if (_convertCount > 0)
+            // if (_convertCount > 0)
             {
-                // _excelTxt.AppendLine("}");
                 var content = _excelTxt.ToString();
                 _excelTxt.Length = 0;
                 _excelTxt.Append(TemplateReplace.Replace("Template/MoeConfig.txt", new Dictionary<string, string>()
@@ -103,9 +101,10 @@ namespace ConvertCmd.Core.Convert.Moe
                 }));
                 SystemUtil.Log(string.Format("Convert Count : [{0}]", _convertCount));
             }
-            else
+
+            if (_convertCount <= 0)
             {
-                SystemUtil.Wran("[该表没有任何数据可以导出!]");
+                SystemUtil.Wran("[该表没有任何数据可以导出!但还是导出!!]");
             }
 
             EventHandel?.OnConvertExcelEnd(_excelName);
@@ -161,6 +160,10 @@ namespace ConvertCmd.Core.Convert.Moe
                 {
                     ++currentRow;
                     continue;
+                }
+                else if (lineCmd == LineCmd.EndBefore)
+                {
+                    break;
                 }
                 else if (lineCmd == LineCmd.End)
                     isBreak = true;
@@ -239,6 +242,8 @@ namespace ConvertCmd.Core.Convert.Moe
                 return LineCmd.End;
             else if (str == "no")
                 return LineCmd.Ignore;
+            else if (str == "end_before")
+                return LineCmd.EndBefore;
             return LineCmd.None;
         }
 

@@ -9,5 +9,7 @@ namespace ConvertCmd.Core.Convert
 
         //  结束
         End,
+
+        EndBefore,
     }
 }

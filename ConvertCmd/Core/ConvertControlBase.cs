@@ -52,12 +52,12 @@ namespace ConvertCmd.Core
 
             if (string.IsNullOrEmpty(ExcelSourceFolder) || !Directory.Exists(ExcelSourceFolder))
             {
-                throw new System.ArgumentException ("excelFolder 不存在!");
+                throw new System.ArgumentException ("excelFolder 为空!");
             }
 
             if (string.IsNullOrEmpty(DesFolder))
             {
-                throw new System.ArgumentException ("desFolder 为空! ");
+                throw new System.ArgumentException ("desFolder 为空!");
             }
 
             if (!Directory.Exists(DesFolder))

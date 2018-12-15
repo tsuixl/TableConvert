@@ -50,8 +50,8 @@ namespace ConvertCmd
                 ArgsData data = new ArgsData ();
                 data.ConvertEvent = ctl;
                 data.Jenkins = false;
-                data.ExcelPath = "../@ExcelTest/Test";
-                data.DesPath = "../@OutputLua/Test";
+                data.ExcelPath = "../@ExcelTest";
+                data.DesPath = "../@OutputLua";
                 data.CustomConvert = new System.Collections.Generic.Dictionary<string, string>();
                 data.CustomConvert.Add("LanguageSetting", "LanguageSplit");
                 // data.ExcelPath = "/Users/cc/Documents/eyu/slg/xfiles/number/excel";
