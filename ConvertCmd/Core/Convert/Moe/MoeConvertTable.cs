@@ -225,7 +225,7 @@ namespace ConvertCmd.Core.Convert.Moe
                 if (item.Key < lineDataCount)
                     colValue = lineData[item.Key].ToString();
                 
-                _excelTxt.Append(_jsonToLua.ConvertString(item.Value.Field, colValue, item.Value.ValueType, 2));
+                _excelTxt.Append(_jsonToLua.ConvertString(item.Value.Field, colValue, item.Value.ValueType, 2, mainKey));
                 _excelTxt.AppendLine(",");
             }
             _excelTxt.AppendLine("\t},\n");

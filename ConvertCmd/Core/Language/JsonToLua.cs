@@ -21,7 +21,7 @@ namespace ConvertCmd.Core.Language
         }
 
 
-        public string ConvertString(string fieldName, string fieldValue, ValueType fieldType, int level)
+        public string ConvertString(string fieldName, string fieldValue, ValueType fieldType, int level, string mainKey)
         {
             _txtBuilder.Length = 0;
             if (fieldType == ValueType.Array || 
@@ -41,7 +41,7 @@ namespace ConvertCmd.Core.Language
                     }
                     catch (System.Exception)
                     {
-                        SystemUtil.Abend (string.Format("字段 {0} Value {1} Json解析失败!", fieldName, fieldValue));
+                        SystemUtil.Abend (string.Format("Key {2} 字段 {0} Value {1} Json解析失败!", fieldName, fieldValue, mainKey));
                     }
                 }
                 

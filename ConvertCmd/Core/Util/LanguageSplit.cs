@@ -222,7 +222,7 @@ public class LanguageSplit : IConvertTableHandle
                 colValue = lineData[item.Key].ToString();
 
             colInfo.Count++;
-            colInfo.Txt.Append(_jsonToLua.ConvertString(item.Value.Field, colValue, item.Value.ValueType, 2));
+            colInfo.Txt.Append(_jsonToLua.ConvertString(item.Value.Field, colValue, item.Value.ValueType, 2, mainKey));
             colInfo.Txt.AppendLine(",");
             colInfo.Txt.AppendLine("\t},\n");
         }

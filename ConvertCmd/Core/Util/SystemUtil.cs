@@ -11,7 +11,7 @@ namespace ConvertCmd.Core.Util
             Console.ForegroundColor = GetColor(ExceptionInfoType.Error);
             WriteLine(info, 0);
             Console.ForegroundColor = ConsoleColor.White;
-            KillApp (info);
+            System.Environment.Exit(100);
         }
 
 
@@ -72,6 +72,14 @@ namespace ConvertCmd.Core.Util
         }
 
 
+        public static void Error (string info)
+        {
+            Console.ForegroundColor = GetColor(ExceptionInfoType.Error);
+            WriteLine(info, 0);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+
         public static void Print(ConvertExceptionInfo info)
         {
             Console.ForegroundColor = GetColor(info.InfoType);
@@ -90,8 +98,8 @@ namespace ConvertCmd.Core.Util
             {
                 info = string.Format(@"\e[31m{0}\e[0m\n", 31, info);
             }
-            
-            throw new System.Exception (info);
+            Error (info);
+            System.Environment.Exit(100);
         }
 
 
